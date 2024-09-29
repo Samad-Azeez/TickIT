@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.get('/', (req, res) => {
-  res.send('API');
+  res.send('TickIT-API');
 });
 
 // Catch All
