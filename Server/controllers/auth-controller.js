@@ -6,6 +6,7 @@ import {
   BadRequestError,
 } from '../errors/index.js';
 
+// Register user and send token in response
 const register = async (req, res) => {
   const user = await userModel.create(req.body);
   const token = userModel.createJWT();
@@ -13,6 +14,7 @@ const register = async (req, res) => {
   res.satus(StatusCodes.CREATED).json({ user: { name: user.name }, token });
 };
 
+// Login user and send token in response
 const login = async (req, res) => {
   const { email, password } = req.body;
 
