@@ -4,6 +4,7 @@ import express from 'express';
 import { notFound } from './middleware/not-found.js';
 import { errorHandlerMiddleware } from './middleware/error-handler.js';
 import { connectDB } from './db/connect.js';
+import { authRouter } from './routes/auth.js';
 
 const app = express();
 
@@ -12,15 +13,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.get('/', (req, res) => {
-  res.send('TickIT-API');
-});
+app.use('/api/v1/auth', authRouter);
 
 // Catch All
 app.use(notFound);
 app.use(errorHandlerMiddleware);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 // Connect to DB and start the server
 const start = async () => {
