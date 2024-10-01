@@ -5,6 +5,7 @@ import { notFound } from './middleware/not-found.js';
 import { errorHandlerMiddleware } from './middleware/error-handler.js';
 import { connectDB } from './db/connect.js';
 import { authRouter } from './routes/auth.js';
+import { ticketRouter } from './routes/tickets.js';
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/tickets', ticketRouter);
 
 // Catch All
 app.use(notFound);
