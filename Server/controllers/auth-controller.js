@@ -1,10 +1,6 @@
 import { userModel } from '../models/user-model.js';
 import { StatusCodes } from 'http-status-codes';
-import {
-  UnauthenticatedError,
-  NotFoundError,
-  BadRequestError,
-} from '../errors/index.js';
+import { UnauthenticatedError, BadRequestError } from '../errors/index.js';
 
 // Register user and send token in response
 const register = async (req, res) => {
