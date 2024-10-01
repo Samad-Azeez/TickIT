@@ -14,7 +14,6 @@ const getTickets = async (req, res) => {
 // Create a ticket
 const createTicket = async (req, res) => {
   req.body.createdBy = req.user.userId;
-
   const ticket = await ticketModel.create(req.body);
 
   res.status(StatusCodes.CREATED).json({ ticket });
