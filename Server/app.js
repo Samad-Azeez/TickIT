@@ -6,6 +6,7 @@ import { errorHandlerMiddleware } from './middleware/error-handler.js';
 import { connectDB } from './db/connect.js';
 import { authRouter } from './routes/auth.js';
 import { ticketRouter } from './routes/tickets.js';
+import { authentication } from './middleware/authentication.js';
 
 const app = express();
 
@@ -15,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/tickets', ticketRouter);
+app.use('/api/v1/tickets', authentication, ticketRouter);
 
 // Catch All
 app.use(notFound);
