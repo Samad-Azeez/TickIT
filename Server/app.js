@@ -21,7 +21,7 @@ app.use('/api/v1/tickets', ticketRouter);
 app.use(notFound);
 app.use(errorHandlerMiddleware);
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 
 // Connect to DB and start the server
 const start = async () => {
