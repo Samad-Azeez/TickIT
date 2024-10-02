@@ -1,10 +1,6 @@
 import { ticketModel } from '../models/ticket-model.js';
 import { StatusCodes } from 'http-status-codes';
-import {
-  UnauthenticatedError,
-  NotFoundError,
-  BadRequestError,
-} from '../errors/index.js';
+import { NotFoundError, BadRequestError } from '../errors/index.js';
 
 // Get all tickets
 const getTickets = async (req, res) => {
