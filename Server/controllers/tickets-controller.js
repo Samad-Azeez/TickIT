@@ -53,20 +53,24 @@ const updateTicket = async (req, res) => {
 
 // Delete a ticket by id
 const deleteTicket = async (req, res) => {
+  // get the user id and ticket id from the request object
   const {
     user: { userId },
     params: { id: ticketId },
   } = req;
 
+  // find the ticket by id and user id and delete it
   const ticket = await ticketModel.findOneAndDelete({
     _id: ticketId,
     createdBy: userId,
   });
 
+  // check if the ticket exists
   if (!ticket) {
     throw new NotFoundError(`No job with id : ${ticketId}`);
   }
 
+  // send a response
   res.status(StatusCodes.OK).json({ msg: 'Ticket deleted' });
 };
 
