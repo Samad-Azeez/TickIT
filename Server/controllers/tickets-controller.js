@@ -8,7 +8,12 @@ import {
 
 // Get all tickets
 const getTickets = async (req, res) => {
-  res.send('get tickets route');
+  const ticket = await ticketModel
+    .find({ createdBy: req.user.userId })
+    .sort({ createdAt: 1 });
+
+  const nbHits = ticket.length;
+  res.status(StatusCodes.OK).json({ ticket, nbHits });
 };
 
 // Create a ticket
@@ -21,7 +26,24 @@ const createTicket = async (req, res) => {
 
 // Get a ticket by id
 const getTicket = async (req, res) => {
-  res.send('get ticket route');
+  // get the user id and ticket id from the request object
+  const {
+    user: { userId },
+    params: { id: ticketId },
+  } = req;
+
+  const ticket = await ticketModel.findOne({
+    // find the ticket by id and user id
+    _id: ticketId,
+    createdBy: userId,
+  });
+
+  // check if the ticket exists
+  if (!ticket) {
+    throw new NotFoundError(`No job with id : ${ticketId}`);
+  }
+
+  res.status(StatusCodes.OK).json({ ticket });
 };
 
 // Update a ticket by id
@@ -31,7 +53,21 @@ const updateTicket = async (req, res) => {
 
 // Delete a ticket by id
 const deleteTicket = async (req, res) => {
-  res.send('delete ticket route');
+  const {
+    user: { userId },
+    params: { id: ticketId },
+  } = req;
+
+  const ticket = await ticketModel.findOneAndDelete({
+    _id: ticketId,
+    createdBy: userId,
+  });
+
+  if (!ticket) {
+    throw new NotFoundError(`No job with id : ${ticketId}`);
+  }
+
+  res.status(StatusCodes.OK).json({ msg: 'Ticket deleted' });
 };
 
 export { createTicket, getTicket, getTickets, updateTicket, deleteTicket };
