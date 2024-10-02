@@ -48,7 +48,34 @@ const getTicket = async (req, res) => {
 
 // Update a ticket by id
 const updateTicket = async (req, res) => {
-  res.send('update ticket route');
+  // get the user id and ticket id from the request object
+  const {
+    user: { userId },
+    params: { id: ticketId },
+    body: { title, category, description },
+  } = req;
+
+  // check if the request body is empty
+  if (!title || !category || !description) {
+    throw new BadRequestError('Please provide all fields');
+  }
+
+  // find the ticket by id and user id and update it
+  const ticket = await ticketModel.findOneAndUpdate(
+    {
+      _id: ticketId,
+      createdBy: userId,
+    },
+    req.body,
+    { new: true, runValidators: true }
+  );
+
+  // check if the ticket exists
+  if (!ticket) {
+    throw new NotFoundError(`No job with id : ${ticketId}`);
+  }
+
+  res.status(StatusCodes.OK).json({ ticket });
 };
 
 // Delete a ticket by id
